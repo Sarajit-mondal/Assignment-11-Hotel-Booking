@@ -8,6 +8,8 @@ import Rooms from "../pages/Rooms";
 import MyBooking from "../pages/MyBooking";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
+import LogIn from "../pages/signUpAndlogin/LogIn";
+import SignUp from "../pages/signUpAndlogin/SignUp";
 
   
   const router = createBrowserRouter([
@@ -35,6 +37,14 @@ import ContactUs from "../pages/ContactUs";
         {
             path:"/contact",
             element: <ContactUs></ContactUs>
+        },
+        {
+            path:"/logIn",
+            element: <LogIn></LogIn>
+        },
+        {
+            path:"/signUp",
+            element: <SignUp></SignUp>
         },
       ]
     },
