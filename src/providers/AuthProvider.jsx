@@ -12,30 +12,20 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/FirebaseAuth";
+import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 export const userContext = createContext();
 function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [allCraft, setAllCraft] = useState();
-  const [togle, setTogle] = useState(true);
+  const axiosSecure = useAxiosSecure()
 
   const [loading, setLoading] = useState(true);
 
   const googleProvider = new GoogleAuthProvider();
   const faceBookProvider = new FacebookAuthProvider();
   const gitHubProvider = new GithubAuthProvider();
-
-
-  //    get data from database
-  const togleCraft = () => {
-    setTogle(!togle);
-  };
-  useEffect(() => {
-    fetch("https://a-10-painting-and-drawing-server.vercel.app/allCraft")
-      .then((res) => res.json())
-      .then((data) => setAllCraft(data));
-  }, [togle]);
-  //    getdata from database
 
   // signUp with email or password
   const creactAccount = (email, password) => {
@@ -72,11 +62,21 @@ function AuthProvider({ children }) {
     });
   };
 
-  // is have user
+  // is have user obgerbar
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (currentUser) => {
+      const logerEmail = user?.email || currentUser?.email
+      const userEmail = {email : logerEmail}
+      console.log(userEmail)
       setUser(currentUser);
       console.log(currentUser);
+      if(currentUser){
+        axiosSecure.post(`/jwt`,userEmail)
+        .then(res => console.log(res.data))
+      }else{``
+        axiosSecure.post(`/logOut`,userEmail)
+        .then(res => console.log(res.data))
+      }
       setLoading(false);
     });
 
@@ -94,7 +94,7 @@ function AuthProvider({ children }) {
     setLoading,
     LogInWithSocial,
     updateUserProfile,
-    allCraft, togleCraft
+    allCraft
   };
 
 
