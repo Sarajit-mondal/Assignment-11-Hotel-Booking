@@ -93,8 +93,8 @@ function Navbar() {
                         {
                             user &&  <li><NavLink to="/myBooking">My Booking</NavLink></li>
                         }
-                        <li><NavLink to="/about">About Us</NavLink></li>
-                        <li><NavLink to="/contact">Contact Us</NavLink></li>
+                        <li><NavLink to="/about">About</NavLink></li>
+                        <li><NavLink to="/contact">Contact </NavLink></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">Draw Print Dream</a>
@@ -108,8 +108,8 @@ function Navbar() {
                         {
                             user &&  <li><NavLink to="/myBooking">My Booking</NavLink></li>
                         }
-                        <li><NavLink to="/about">About Us</NavLink></li>
-                        <li><NavLink to="/contact">Contact Us</NavLink></li>
+                        <li><NavLink to="/about">About</NavLink></li>
+                        <li><NavLink to="/contact">Contact</NavLink></li>
                 </ul>
             </div>
             <div className="navbar-end">

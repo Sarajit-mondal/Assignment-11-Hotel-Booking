@@ -1,12 +1,15 @@
 import React from 'react';
 
 const ContactUs = () => {
+  const handleAbout = (e) =>{
+   e.preventDefault()
+  }
   return (
-    <div className="container mx-auto py-8">
+    <div className="container md:w-3/5 mx-auto py-8">
       <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
       
       {/* Contact Form */}
-      <form className="mb-8">
+      <form className="mb-8" onSubmit={handleAbout}>
         <div className="mb-4">
           <label htmlFor="name" className="block mb-1">Name</label>
           <input type="text" id="name" name="name" className="w-full p-2  bg-transparent border-2          border-sluBlue-300 rounded" />
