@@ -15,7 +15,7 @@ import { auth } from "../firebase/FirebaseAuth";
 
 export const userContext = createContext();
 function AuthProvider({ children }) {
-  const [user, setUser] = useState("sarajit");
+  const [user, setUser] = useState();
   const [allCraft, setAllCraft] = useState();
   const [togle, setTogle] = useState(true);
 

@@ -11,7 +11,7 @@ import ContactUs from "../pages/ContactUs";
 import LogIn from "../pages/signUpAndlogin/LogIn";
 import SignUp from "../pages/signUpAndlogin/SignUp";
 import PostReview from "../components/postReview/PostReview";
-
+import ViewDetails from '../components/detailsPage/ViewDetails.jsx'
   
   const router = createBrowserRouter([
     {
@@ -50,6 +50,10 @@ import PostReview from "../components/postReview/PostReview";
         {
             path:"/postReview",
             element: <PostReview></PostReview>
+        },
+        {
+            path:"/viewDetails",
+            element: <ViewDetails></ViewDetails>
         },
       ]
     },
