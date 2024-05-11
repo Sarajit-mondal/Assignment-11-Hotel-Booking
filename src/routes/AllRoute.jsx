@@ -10,6 +10,7 @@ import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
 import LogIn from "../pages/signUpAndlogin/LogIn";
 import SignUp from "../pages/signUpAndlogin/SignUp";
+import PostReview from "../components/postReview/PostReview";
 
   
   const router = createBrowserRouter([
@@ -45,6 +46,10 @@ import SignUp from "../pages/signUpAndlogin/SignUp";
         {
             path:"/signUp",
             element: <SignUp></SignUp>
+        },
+        {
+            path:"/postReview",
+            element: <PostReview></PostReview>
         },
       ]
     },

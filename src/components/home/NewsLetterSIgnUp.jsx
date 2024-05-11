@@ -16,7 +16,11 @@ const NewsLetterSIgnUp = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row  items-center gap-10 justify-center bg-white">
+   <div>
+      <h2 className="text-2xl font-bold text-sky-400 mb-10 text-center">
+      Subscribe Our NewsLetter
+      </h2>
+     <div className="flex flex-col md:flex-row  items-center gap-10 justify-center bg-white">
       <div>
         <img src="https://i.postimg.cc/BbqCPvHq/sign.jpg" alt="" className="" />
       </div>
@@ -26,7 +30,7 @@ const NewsLetterSIgnUp = () => {
           exclusive offers.
         </p>
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Subscribe to Our Newsletter
+         <span className="text-red-500"> Subscribe</span> to Our Newsletter
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row">
           <input
@@ -34,7 +38,7 @@ const NewsLetterSIgnUp = () => {
             value={email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="w-full sm:w-auto px-4 py-2 sm:mr-2 mb-2 sm:mb-0 rounded-md border border-gray-400 bg-transparent focus:outline-none focus:border-blue-500"
+            className="w-full sm:w-auto px-4 py-2 sm:mr-2 mb-2 sm:mb-0 rounded-md border-2 border-skyBlue-400 bg-transparent focus:outline-none focus:border-blue-500"
           />
           <button
             type="submit"
@@ -45,6 +49,7 @@ const NewsLetterSIgnUp = () => {
         </form>
       </div>
     </div>
+   </div>
   );
 };
 

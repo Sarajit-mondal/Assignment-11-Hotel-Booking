@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { FaStarHalf } from 'react-icons/fa';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -21,12 +22,12 @@ function UserReviews() {
       <div className="space-y-5 min-w-48">
         <h2 className="text-3xl font-bold">User Reviews</h2>
          <span className="flex items-end"><h3 className="text-[#fc6f03] text-4xl font-bold">4.8</h3> <p>out of 5 Stars</p></span>
-         <div className="flex text-xl text-[#fc6f03]">
+         <div className="flex text-xl text-[#fc6f03] ">
          <FaStar></FaStar>
          <FaStar></FaStar>
          <FaStar></FaStar>
          <FaStar></FaStar>
-         <FaStar></FaStar>
+         <FaStarHalf></FaStarHalf>
          </div>
          <small>(3245 Verifled Reviews)</small>
          <br />
