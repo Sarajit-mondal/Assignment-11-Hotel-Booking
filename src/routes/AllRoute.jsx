@@ -12,6 +12,7 @@ import LogIn from "../pages/signUpAndlogin/LogIn";
 import SignUp from "../pages/signUpAndlogin/SignUp";
 import PostReview from "../components/postReview/PostReview";
 import ViewDetails from '../components/detailsPage/ViewDetails.jsx'
+import PrivateRoute from "./PrivateRoute.jsx";
   
   const router = createBrowserRouter([
     {
@@ -29,7 +30,7 @@ import ViewDetails from '../components/detailsPage/ViewDetails.jsx'
         },
         {
             path:"/myBooking",
-            element: <MyBooking></MyBooking>
+            element: <PrivateRoute><MyBooking></MyBooking></PrivateRoute>
         },
         {
             path:"/about",
