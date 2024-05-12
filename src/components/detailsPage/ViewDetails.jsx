@@ -1,23 +1,84 @@
 import moment from 'moment';
 import React, { useState } from 'react'
 import { FaStar } from 'react-icons/fa'
-import { Link, useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import useAuth from '../../hooks/useAuth';
 
 
 function ViewDetails() {
   const room = useLoaderData()
-  const today = moment().format('DD-MM-YYYY');
+  const {user} = useAuth()
+  const today = new Date();
   const tomorrow = moment().add(1,'day').format('DD-MM-YYYY');
 
     const [checkInDate, setCheckInDate] = useState(today);
     const [checkOutDate, setCheckOutDate] = useState(null);
+    const navigator = useNavigate()
+
+    console.log(new Date(checkInDate))
+    console.log(typeof checkOutDate)
+  //handle room book 
+  //handle room book 
+
+  
+  const handRoomBook = (e) =>{
+    e.preventDefault()
+    if(!user){
+     navigator('/logIn')
+    }else{
+      document.getElementById("my_modal_4").showModal()
+    }
+    
+  }
+
+  // headleRoom Comfim
+  // headleRoom Comfim
+  const handleConfirm =(e)=>{
+    e.preventDefault()
+
+    const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
+    
+//     // calculation starday and endDay gap
+//     // Convert date strings to Date objects
+// const startDate = new Date(checkInDate);
 
 
-  // reviews handle
-  const handleReview = () => {
+// Calculate the difference in milliseconds
+const differenceInMs = checkOutDate - checkInDate;
+
+
+// Convert milliseconds to days
+const millisecondsInOneDay = 1000 * 60 * 60 * 24; // milliseconds * seconds * minutes * hours
+const differenceInDays = Math.round(differenceInMs / millisecondsInOneDay);
+
+console.log(differenceInDays)
+
+    const booking = {
+      "RoomNo": Math.ceil(Math.random() * 50 +1),
+      "allRoomId" : room._id,
+      "roomImage": room.RoomImages,
+      "roomSize": room.RoomSize,
+      "checkIn":checkInDate,
+      "checkOut": checkOut,
+      "totalCost" : differenceInDays * room.
+      PricePerNight,
+    }
+
+    console.log(booking)
+
+
+    // close model
+    document.getElementById('my_modal_4').close();
+  }
+  // headleRoom Comfim
+  // headleRoom Comfim
+
+
+    // reviews handle
+    const handleReview = () => {
       Swal.fire({
         text: "Please Book This Room First",
         showConfirmButton: true,
@@ -26,16 +87,6 @@ function ViewDetails() {
         cancelButtonText: "No",
       })
   };
-
-  //handle room book 
-  //handle room book 
-  
-  const handRoomBook = (e) =>{
-    e.preventDefault()
-    const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
-    console.log(checkInDate,checkOut)
-  }
-
 
   console.log(room)
   return (
@@ -84,7 +135,7 @@ function ViewDetails() {
             required
             selected={moment(checkInDate, "DD-MM-YYYY").toDate()}
             onChange={(date) =>
-              setCheckInDate(moment(date).format("DD-MM-YYYY"))
+              setCheckInDate(date)
             }
             dateFormat="dd-MM-yyyy"
             className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
@@ -109,14 +160,65 @@ function ViewDetails() {
             minDate={moment(checkInDate, "DD-MM-YYYY").toDate()} // Restrict past dates and dates before check-in date
           />
         </div>
+                {
+                  room.Availability === "unavailable" ?  <button  className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Unavailable</button>
+                   :
+                 <button type="submit" className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Book Now</button>
+                }
                
-                <button type="submit" className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Book Now</button>
+           
+               
             </form>
         
         {/* Book now and date picker */}
 
       </div>
     </div>
+
+
+    {/* show modal  */}
+    {/* show modal  */}
+    <div>
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 md:w-3/4 max-w-xl bg-light">
+          {/* content  */}
+          <figure>
+            <img
+              src="https://img.freepik.com/premium-photo/3d-rendering-beautiful-luxury-bedroom-suite-hotel-with-tv-night_105762-1627.jpg?w=740"
+              alt=""
+              className="w-full h-64 rounded-lg"
+            />
+          </figure>
+          <h1 className="text-2xl mt-3 font-bold mb-4">Price Per Night : <span className='text-[#e85415]'>$ {room.PricePerNight}</span></h1>
+       
+        <p className="text-gray-700 mb-4">{room.RoomDescription}</p>
+
+        <div className="flex items-center mb-4 justify-between">
+          <span className="text-dark-gray font-bold flex items-center">RoomSize : {room.RoomSize}</span>
+          <p>Room Availability: <Link className="py-1 px-3 bg-skyBlue-400 text-light rounded-full">{room.Availability}</Link></p>
+        </div>
+          <div className="modal-action">
+            <form method="dialog gap-5">
+              {/* Close button */}
+              <button
+                className="btn mr-5 bg-red-400"
+                onClick={(e) => {
+                 e.preventDefault()
+                  document.getElementById("my_modal_4").close()}
+                }>
+                Close
+              </button>
+              {/* Confirm button */}
+              <button className="btn bg-skyBlue-400" onClick={handleConfirm}>
+                Confirm
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+    {/* show modal  */}
+    {/* show modal  */}
   </div>
   )
 }
