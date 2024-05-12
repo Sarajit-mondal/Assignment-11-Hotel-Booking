@@ -66,7 +66,7 @@ function Rooms() {
   };
 
   return (
-    <div className="relative border-2 border-sky-400 p-5 my-5 rounded-xl">
+    <div className="relative border-2 border-sky-400 p-5 my-5 rounded-xl min-h-screen">
       {isLoading && <Loading />}
       <h2 className="text-4xl font-bold text-sky-400 mb-4 text-center">
         Our All Rooms
@@ -101,7 +101,7 @@ function Rooms() {
                   className="w-full h-64 rounded-t-xl"
                 />
               </figure>
-              <Link to='/viewDetails' className="absolute top-2/4 left-2/4 rounded-xl -translate-x-2/4 -translate-y-2/4 w-full h-full bg-[#87CEEB33] flex justify-center items-center [&>*]:hover:block hover:bg-[#87CEEB80] ease-linear duration-300">
+              <Link to={`/viewDetails/${room._id}`} className="absolute top-2/4 left-2/4 rounded-xl -translate-x-2/4 -translate-y-2/4 w-full h-full bg-[#87CEEB33] flex justify-center items-center [&>*]:hover:block hover:bg-[#87CEEB80] ease-linear duration-300">
                 <button className="btn hidden border-sky-500 border-2 bg-transparent hover:bg-sky-300 font-bold text-white text-lg ">
                  See Details
                 </button>

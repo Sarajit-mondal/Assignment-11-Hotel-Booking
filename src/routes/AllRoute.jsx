@@ -52,8 +52,9 @@ import ViewDetails from '../components/detailsPage/ViewDetails.jsx'
             element: <PostReview></PostReview>
         },
         {
-            path:"/viewDetails",
-            element: <ViewDetails></ViewDetails>
+            path:"/viewDetails/:id",
+            element: <ViewDetails></ViewDetails>,
+            loader: ({params})=> fetch(`${import.meta.env.VITE_API_URL}/allRoom/${params.id}`)
         },
       ]
     },
