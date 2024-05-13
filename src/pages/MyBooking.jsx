@@ -1,11 +1,86 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { userContext } from '../providers/AuthProvider';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Swal from 'sweetalert2';
+import useBookingData from '../hooks/useBookingData';
+import Loading from '../components/loding/Loading';
 
 const MyBooking = () => {
+  const {user} = useContext(userContext)
+  const {data : bookingData =[],isLoading,refetch} = useBookingData()
+  console.log(bookingData )
+  // date picker
+  const today = new Date();
+  const tomorrow = moment().add(1,'day').format('DD-MM-YYYY');
+    const [checkInDate, setCheckInDate] = useState(today);
+    const [checkOutDate, setCheckOutDate] = useState(null);
+  // date picker
+  const [username, setUsername] = useState(user?.displayName || "userName");
+  const [rating, setRating] = useState(1);
+  const [comment, setComment] = useState('');
 
+// handle room book
+const handRoomBook =(e) =>{
+e.preventDefault()
+const checkIn = moment(checkInDate).format('DD-MM-YYYY')
+const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
+ console.log(checkIn,checkOut)
+
+ document.getElementById("my_modal_5").close()
+}
+
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+
+const cancelBooking = () =>{
+  
+  const newDateFormat = moment('17-05-2024','DD-MM-YYYY').format('MM-DD-YYYY')
+
+  const bookingDate = new Date(newDateFormat)
+  const distanceDate = bookingDate - today;
+  const oneDay = 1000 * 60 * 60 * 24;
+  // condition cancel roombooking
+  if( distanceDate  < oneDay){
+    Swal.fire({
+      text: "You can't Cancel booking. cancel time over! ",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    })
+  }else{
+    Swal.fire({
+      text: "Do You Want to Cancel Booking",
+      showConfirmButton: true,
+      confirmButtonText: "Yes",
+      showCancelButton: true,
+      cancelButtonText: "No",
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        console.log("delete from database")
+      }
+    });
+  }
+}
+
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  const handlePostRating = (e) =>{
+   e.preventDefault()
+   console.log(username,rating,comment || "This was awsome room")
+
+   document.getElementById("my_modal_4").close()
+  }
 
   return (
-   <div >
+   <div className='relative' >
+     {
+      isLoading && <Loading></Loading>
+     }
        <table className='w-full md:w-3/4 mx-auto'>
        <tbody className='space-y-5'>
         <tr className='border-2 shadow-xl my-5'>
@@ -36,16 +111,165 @@ const MyBooking = () => {
         <div className="flex text-lg text-[#fc6f03] ">
                   <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalf />
           </div>
-          <button className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
+          <button onClick={()=> document.getElementById("my_modal_4").showModal()} className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
         </td>
         <th>
-        <button className="btn bg-skyBlue-500 btn-sm">Update</button>
+        <button onClick={()=> document.getElementById("my_modal_5").showModal()} className="btn bg-skyBlue-500 btn-sm">Update</button>
         <br />
-        <button className="btn mt-2 btn-error btn-sm">Cancel</button>
+        <button onClick={cancelBooking} className="btn mt-2 btn-error btn-sm">Cancel</button>
         </th>
       </tr>
         </tbody>
        </table>
+
+         {/* show modal rating */}
+         {/* show modal rating */}
+         {/* show modal rating */}
+         {/* show modal rating */}
+    <div>
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 md:w-1/4 max-w-xl bg-light">
+          {/* content  */}
+          {/* content  */}
+          {/* content  */}
+          <form action="">
+          <div className="mb-4">
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+          <input
+            type="text"
+            id="username"
+            className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+            value={username}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating</label>
+          <select
+            id="rating"
+            className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+            value={rating}
+            onChange={(e) => setRating(parseInt(e.target.value))}
+            required
+          >
+            {[1, 2, 3, 4, 5].map((num) => (
+              <option key={num} value={num}>{num}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="comment" className="block text-sm font-medium text-gray-700">Comment</label>
+          <textarea
+            id="comment"
+            className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            required
+          ></textarea>
+        </div>
+
+          </form>
+
+          <div className="modal-action">
+            <form method="dialog gap-5">
+              
+              {/* Close button */}
+              <button
+                className="btn mr-5 bg-red-400"
+                onClick={(e) => {
+                 e.preventDefault()
+                  document.getElementById("my_modal_4").close()}
+                }>
+                Close
+              </button>
+              {/* Confirm button */}
+              <button onClick={handlePostRating} className="btn bg-skyBlue-400">
+                Confirm
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+    {/* show modal rating */}
+         {/* show modal update date */}
+         {/* show modal update date*/}
+        {/* show modal update date */}
+        <div>
+      <dialog id="my_modal_5" className="modal">
+        <div className="modal-box w-11/12 md:w-1/4 max-w-xl bg-light">
+          {/* content  */}
+          {/* content  */}
+          {/* content  */}
+          
+
+          <div className="modal-action">
+            <div method="dialog gap-5">
+               {/* Book now and date picker */}
+       
+            <form onSubmit={handRoomBook} className="w-full ">
+               
+               <div className="mb-2">
+             <label
+               htmlFor="checkIn"
+               className="block text-sm font-medium text-gray-700"
+             >
+               Check In:
+             </label>
+             <DatePicker
+               required
+               selected={moment(checkInDate, "DD-MM-YYYY").toDate()}
+               onChange={(date) =>
+                 setCheckInDate(date)
+               }
+               dateFormat="dd-MM-yyyy"
+               className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+               minDate={new Date()} // Restrict past dates
+               maxDate={checkOutDate}
+             />
+           </div>
+           <div className="mb-4">
+             <label
+               htmlFor="checkOut"
+               className="block text-sm  font-medium text-gray-700"
+             >
+               Check Out:
+             </label>
+             <DatePicker
+             required
+             placeholderText ={tomorrow}
+               selected={checkOutDate}
+               onChange={(date) => setCheckOutDate(date)}
+               dateFormat="dd-MM-yyyy"
+               className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+               minDate={moment(checkInDate, "DD-MM-YYYY").toDate()} // Restrict past dates and dates before check-in date
+             />
+           </div>
+                  
+              <div className='flex'>
+              <button type="submit" className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Confirm</button>
+                   
+                  
+                   {/* Close button */}
+              <button
+                className="btn mr-5 bg-red-400"
+                onClick={(e) => {
+                 e.preventDefault()
+                  document.getElementById("my_modal_5").close()}
+                }>
+                Close
+              </button>
+                </div>     
+                  
+               </form>
+           
+           {/* Book now and date picker */}
+              
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </div>
    </div>
   );
 };

@@ -6,11 +6,16 @@ import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { update } from 'firebase/database';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 function ViewDetails() {
   const room = useLoaderData()
   const {user} = useAuth()
+  const queryClient = useQueryClient()
   const today = new Date();
   const tomorrow = moment().add(1,'day').format('DD-MM-YYYY');
 
@@ -22,8 +27,6 @@ function ViewDetails() {
     console.log(typeof checkOutDate)
   //handle room book 
   //handle room book 
-
-  
   const handRoomBook = (e) =>{
     e.preventDefault()
     if(!user){
@@ -34,6 +37,8 @@ function ViewDetails() {
     
   }
 
+  // headleRoom Comfim
+  // headleRoom Comfim
   // headleRoom Comfim
   // headleRoom Comfim
   const handleConfirm =(e)=>{
@@ -66,6 +71,27 @@ console.log(differenceInDays)
       "totalCost" : differenceInDays * room.
       PricePerNight,
     }
+
+    axios.post(`${import.meta.env.VITE_API_URL}/bookingRoom`,booking)
+    .then(res => {
+      axios.patch(`${import.meta.env.VITE_API_URL}/allRoomUpdate/${room._id}`,{update:"unavailable"})
+
+      // queryClient.invalidateQueries({queryKey:['allRoom']})
+      Swal.fire({
+        text: "Booking Successful",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+      })
+      .then(res => {
+        if(res.isConfirmed){
+          navigator('/rooms')
+        }
+      })
+      
+    })
+    .catch(error => {
+      toast("some this is worng",error.code)
+    })
 
     console.log(booking)
 
@@ -161,7 +187,7 @@ console.log(differenceInDays)
           />
         </div>
                 {
-                  room.Availability === "unavailable" ?  <button  className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Unavailable</button>
+                  room.Availability === "unavailable" ?  <button disabled  className="bg-skyBlue-400  hover:bg-blue-500 text-white font-semibold btn rounded-md">Unavailable</button>
                    :
                  <button type="submit" className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Book Now</button>
                 }
@@ -201,7 +227,7 @@ console.log(differenceInDays)
             <form method="dialog gap-5">
               {/* Close button */}
               <button
-                className="btn mr-5 bg-red-400"
+                className="btn mr-5 bg-red-400 text-white"
                 onClick={(e) => {
                  e.preventDefault()
                   document.getElementById("my_modal_4").close()}
@@ -209,7 +235,7 @@ console.log(differenceInDays)
                 Close
               </button>
               {/* Confirm button */}
-              <button className="btn bg-skyBlue-400" onClick={handleConfirm}>
+              <button className="btn bg-skyBlue-400 text-white" onClick={handleConfirm}>
                 Confirm
               </button>
             </form>
