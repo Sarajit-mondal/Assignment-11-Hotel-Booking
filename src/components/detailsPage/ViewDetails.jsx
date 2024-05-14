@@ -71,7 +71,7 @@ console.log(differenceInDays)
       "checkIn":checkIn,
       "checkOut": checkOut,
       "totalCost" : differenceInDays * room.
-      PricePerNight,
+      PricePerNight || room.PricePerNight,
     }
 
     axios.post(`${import.meta.env.VITE_API_URL}/bookingRoom`,booking)

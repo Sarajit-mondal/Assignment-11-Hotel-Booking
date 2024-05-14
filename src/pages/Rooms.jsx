@@ -15,7 +15,7 @@ function Rooms() {
   const { data: allRooms, isLoading, isError, error } = useRoomsData();
   const [selectedRange, setSelectedRange] = useState('');
   const [displayedRooms, setDisplayedRooms] = useState([]);
-
+console.log(allRooms)
   useEffect(() => {
     setDisplayedRooms(allRooms);
   }, [allRooms]);

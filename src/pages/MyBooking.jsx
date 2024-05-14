@@ -26,13 +26,42 @@ const MyBooking = () => {
   const [comment, setComment] = useState('');
   const [totalReviews,setTotalReviews] = useState()
   const [idAllRoom,setIdAllRoom] = useState()
+  const [bookingId,setBookingId] = useState()
 
+// handle room update
+// handle room update
+// handle room update
+// handle room update
+// handle room update
 // handle room book
-const handRoomBook =(e) =>{
+const handleUpdate =(e) =>{
 e.preventDefault()
 const checkIn = moment(checkInDate).format('DD-MM-YYYY')
 const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
  console.log(checkIn,checkOut)
+const update ={
+  "checkIn" :checkIn,
+  "checkOut":checkOut
+}
+ axios.patch(`${import.meta.env.VITE_API_URL}/bookingUpdate/${bookingId}`,update)
+ .then(res => {
+  Swal.fire({
+    text: "Booking Update complete",
+    showConfirmButton: true,
+    confirmButtonText: "ok",
+    icon: "success"
+   
+  })
+  refetch()
+ })
+ .catch(error =>{
+  Swal.fire({
+    text: `"Error!     ",${error.message ||error.code}`,
+    showConfirmButton: true,
+    confirmButtonText: "ok",
+    icon: "error"
+  })
+ })
 
  document.getElementById("my_modal_5").close()
 }
@@ -40,20 +69,39 @@ const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
 // cancle room MyBooking
 // cancle room MyBooking
 // cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
+// cancle room MyBooking
 
-const cancelBooking = () =>{
+const cancelBooking = (id,checkIn) =>{
   
-  const newDateFormat = moment('17-05-2024','DD-MM-YYYY').format('MM-DD-YYYY')
+  const newDateFormat = moment(checkIn,'DD-MM-YYYY').format('MM-DD-YYYY')
 
-  const bookingDate = new Date(newDateFormat)
-  const distanceDate = bookingDate - today;
+  const bookingStarDate = new Date(newDateFormat)
+  const distanceDate = bookingStarDate - today;
   const oneDay = 1000 * 60 * 60 * 24;
+
+  const update ={
+    "update" : 'available'
+  }
   // condition cancel roombooking
   if( distanceDate  < oneDay){
     Swal.fire({
       text: "You can't Cancel booking. cancel time over! ",
       showConfirmButton: true,
       confirmButtonText: "Ok",
+      icon:"warning"
     })
   }else{
     Swal.fire({
@@ -65,12 +113,50 @@ const cancelBooking = () =>{
     })
     .then((result) => {
       if (result.isConfirmed) {
-        console.log("delete from database")
+
+        axios.delete(`${import.meta.env.VITE_API_URL}/bookingDelete/${id}`)
+        .then(res =>{
+          console.log(res.data)
+          // Update all room Availability
+          refetch()
+          axios.patch(`${import.meta.env.VITE_API_URL}/allRoomUpdateAvailability/${idAllRoom}`,update)
+
+          Swal.fire({
+            text: "Booking cancel successfull",
+            showConfirmButton: true,
+            confirmButtonText: "ok",
+            icon: "success"
+           
+          })
+
+        
+        })
+        .catch(error=>{
+          Swal.fire({
+            text: `"error!"${error.code || error.message}`,
+            showConfirmButton: true,
+            confirmButtonText: "ok",
+            icon: "error"
+           
+          })
+        })
+        refetch()
       }
     });
   }
 }
 
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
+  // handlepostRaing
   // handlepostRaing
   // handlepostRaing
   // handlepostRaing
@@ -142,7 +228,7 @@ const cancelBooking = () =>{
           </td>
           <td className='font-bold '>
           <p className='mb-3'>PaymentStatus <span className='text-skyBlue-400'>Paid</span></p>
-          <p>Total Cost $: <span className='text-skyBlue-400'>{booking.totalCost}</span></p>
+          <p>Total Cost $: <span className='text-skyBlue-400'>{booking?.totalCost}</span></p>
           </td>
           <td>
            <div className='flex gap-2 items-center mb-3'><span className='bg-skyBlue-500 block size-3 rounded-full'></span> <p>{booking.checkIn}</p></div>
@@ -161,9 +247,15 @@ const cancelBooking = () =>{
               } className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
           </td>
           <th>
-          <button onClick={()=> document.getElementById("my_modal_5").showModal()} className="btn bg-skyBlue-500 btn-sm">Update</button>
+        <button onClick={()=> {
+          setBookingId(booking._id)
+          document.getElementById("my_modal_5").showModal()
+        }} className="btn bg-skyBlue-500 btn-sm">Update</button>
           <br />
-          <button onClick={cancelBooking} className="btn mt-2 btn-error btn-sm">Cancel</button>
+        <button onClick={()=>{
+          cancelBooking(booking._id,booking.checkIn)
+          setIdAllRoom(booking.allRoomId)
+        }} className="btn mt-2 btn-error btn-sm">Cancel</button>
           </th>
         </tr>)
         }
@@ -266,7 +358,7 @@ const cancelBooking = () =>{
             <div method="dialog gap-5">
                {/* Book now and date picker */}
        
-            <form onSubmit={handRoomBook} className="w-full ">
+            <form onSubmit={handleUpdate} className="w-full ">
                
                <div className="mb-2">
              <label
@@ -304,14 +396,14 @@ const cancelBooking = () =>{
                minDate={moment(checkInDate, "DD-MM-YYYY").toDate()} // Restrict past dates and dates before check-in date
              />
            </div>
-                  
+                  {/* confirm button */}
               <div className='flex'>
               <button type="submit" className="bg-skyBlue-400 hover:bg-blue-500 text-white font-semibold btn rounded-md">Confirm</button>
                    
                   
                    {/* Close button */}
               <button
-                className="btn mr-5 bg-red-400"
+                className="btn ml-5 bg-red-400"
                 onClick={(e) => {
                  e.preventDefault()
                   document.getElementById("my_modal_5").close()}
