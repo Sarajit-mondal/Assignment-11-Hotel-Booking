@@ -14,12 +14,12 @@ function FeaturedRooms() {
        {
         if(inx % 3 === 0){
           if(inx < 22){
-            return  <div className="relative card bg-sky-300 shadow-xl">
+            return  <div key={inx} className="relative card bg-sky-300 shadow-xl">
             <figure>
               <img
                 src={room.RoomImages}
                 alt="room"
-                className="w-full h-52 lg:h-44"
+                className="w-full h-52 lg:h-40"
               />
             </figure>
             <div className="p-3">
@@ -29,7 +29,7 @@ function FeaturedRooms() {
                }
               </p>
             </div>
-            <Link className="absolute top-2/4 left-2/4 rounded-xl -translate-x-2/4 -translate-y-2/4 w-full h-full bg-[#87CEEB33] flex justify-center items-center [&>*]:hover:block hover:bg-[#87CEEB80] ease-linear duration-300">
+            <Link to={`/viewDetails/${room._id}`} className="absolute top-2/4 left-2/4 rounded-xl -translate-x-2/4 -translate-y-2/4 w-full h-full bg-[#87CEEB33] flex justify-center items-center [&>*]:hover:block hover:bg-[#87CEEB80] ease-linear duration-300">
               <button className="btn hidden border-sky-500 border-2 bg-transparent hover:bg-sky-300 font-bold text-white text-lg">
                 Book Now
               </button>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { FaStarHalf } from 'react-icons/fa';
 // Import Swiper React components
@@ -12,9 +12,20 @@ import 'swiper/css/pagination';
 // import required modules
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 function UserReviews() {
+  const [allReview,setAllReview] = useState()
+
+useEffect(()=>{
+  axios.get(`${import.meta.env.VITE_API_URL}/allReview`)
+  .then(res => {
+    setAllReview(res.data)
+  })
+
+},[])
+console.log(allReview)
   const isSmallDevice = window.innerWidth < 700
   return (
     <div className="flex justify-between gap-16">
@@ -29,7 +40,7 @@ function UserReviews() {
          <FaStar></FaStar>
          <FaStarHalf></FaStarHalf>
          </div>
-         <small>(3245 Verifled Reviews)</small>
+         <small>{1124 + allReview?.length} Verifled Reviews</small>
          <br />
          <Link className="underline text-xl text-[#fc6f03]">All Reviews</Link>
       </div>
@@ -47,100 +58,36 @@ function UserReviews() {
       >
     
         {/* slider  */}
-        <SwiperSlide >
-         <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
-         <div className=''>
-          <div className="flex text-xl text-[#fc6f03]">
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         </div>
-         <p className='text-justify mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptas, sed  </p>
+        {
+        allReview && allReview.map(review =>  <SwiperSlide key={review._id}>
+          <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
+          <div className=''>
+           <div className="flex text-xl ">
+          {
+            [...Array(review.rating)].map(rating => <FaStar className='text-[#fc6f03]' />)
+            
+          }
+          {
+            [...Array(5 - review.rating +1)].map((reating,inx) => {
+              if(inx + review.rating < 5){
+               return <FaStar />
+              }
+            })
+          }
+
+        
           </div>
-          <div >
-            <h3 className='text-lg font-bold'>Name</h3>
-            <p>Time</p>
+          <p className='text-justify mt-2'>{review.comment} </p>
+           </div>
+           <div >
+             <h3 className='text-lg font-bold'>{review.username}</h3>
+             <p>{review.todayDate}</p>
+           </div>
           </div>
-         </div>
-        </SwiperSlide>
-        {/* slider  */}
-        <SwiperSlide >
-         <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
-         <div className=''>
-          <div className="flex text-xl text-[#fc6f03]">
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         </div>
-         <p className='text-justify mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptas, sed doloribus reiciendis facere in aut quibusdam iusto id odit molestiae animi consequuntur </p>
-          </div>
-          <div >
-            <h3>Name</h3>
-            <p>Time</p>
-          </div>
-         </div>
-        </SwiperSlide>
-        {/* slider  */}
-        <SwiperSlide >
-         <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
-         <div className=''>
-          <div className="flex text-xl text-[#fc6f03]">
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         </div>
-         <p className='text-justify mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptas, sed doloribus reiciendis facere in aut quibusdam iusto id odit molestiae animi consequuntur </p>
-          </div>
-          <div >
-            <h3>Name</h3>
-            <p>Time</p>
-          </div>
-         </div>
-        </SwiperSlide>
-        {/* slider  */}
-        <SwiperSlide >
-         <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
-         <div className=''>
-          <div className="flex text-xl text-[#fc6f03]">
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         </div>
-         <p className='text-justify mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptas, sed doloribus reiciendis facere in aut quibusdam iusto id odit molestiae animi consequuntur </p>
-          </div>
-          <div >
-            <h3>Name</h3>
-            <p>Time</p>
-          </div>
-         </div>
-        </SwiperSlide>
-        {/* slider  */}
-        <SwiperSlide >
-         <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
-         <div className=''>
-          <div className="flex text-xl text-[#fc6f03]">
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         <FaStar></FaStar>
-         </div>
-         <p className='text-justify mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptas, sed doloribus reiciendis facere in aut quibusdam iusto id odit molestiae animi consequuntur </p>
-          </div>
-          <div >
-            <h3>Name</h3>
-            <p>Time</p>
-          </div>
-         </div>
-        </SwiperSlide>
+         </SwiperSlide>)
+      }
+       
+      
        
       </Swiper>
     </>

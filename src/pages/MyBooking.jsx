@@ -31,7 +31,7 @@ const MyBooking = () => {
 
   // get oneRoom totalReviews
   const getTotalRivews =()=>{
-    axios.get(`${import.meta.env.VITE_API_URL}/allRoom/${idAllRoom}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/allRoom/${idAllRoom ||'663fbe83cbcb0286204e2ba7'}`)
   .then(res => {
     setTotalReviews(res.data.TotalReviews +1)
   })
@@ -172,6 +172,7 @@ const cancelBooking = (id,checkIn) =>{
   // handlepostRaing
   const handlePostRating = (e) =>{
    e.preventDefault()
+   getTotalRivews()
   
    const todayDate = moment(today).format('DD-MM-YYYY')
    const timeStamp = moment(today).unix();
@@ -183,7 +184,7 @@ const cancelBooking = (id,checkIn) =>{
    "rating" : rating, 
    "todayDate":todayDate,
    "timeStamp":timeStamp,
-   "comment":comment|| "This was awsome room.I love that room.if i come here again than i will book that room again"
+   "comment":comment|| "This was awsome room"
    }
 
    const update ={
@@ -362,7 +363,7 @@ const cancelBooking = (id,checkIn) =>{
         {/* show modal update date */}
         <div>
       <dialog id="my_modal_5" className="modal">
-        <div className="modal-box w-11/12 md:w-1/4 max-w-xl bg-light flex items-center justify-center">
+        <div className="modal-box w-11/12 md:w-2/5 max-w-xl bg-light flex justify-center">
           {/* content  */}
           {/* content  */}
           {/* content  */}
