@@ -65,6 +65,7 @@ console.log(allRooms)
     }
   };
 
+
   return (
     <div className="relative border-2 border-sky-400 p-5 my-5 rounded-xl min-h-screen">
       {isLoading && <Loading />}
@@ -88,6 +89,7 @@ console.log(allRooms)
           <option value="350-400">$350 - $400</option>
           <option value="400-450">$400 - $450</option>
           <option value="450-500">$450 - $500</option>
+          <option value="500-50000">$500 - More...</option>
         </select>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

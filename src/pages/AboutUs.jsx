@@ -4,16 +4,16 @@ const AboutUs = () => {
   return (
     <div className="mx-auto max-w-2xl p-8">
       <h1 className="text-3xl font-bold mb-4">About Us</h1>
-      <p className="mb-4">Welcome to [Your Hotel Booking Website Name]! We're dedicated to providing you with the best hotel booking experience possible.</p>
+      <p className="mb-4">Welcome to Preaceful Hotel! We're dedicated to providing you with the best hotel booking experience possible.</p>
       
       <h2 className="text-2xl font-bold mb-2">Our Mission</h2>
       <p className="mb-4">Our mission is to make hotel booking easy, convenient, and affordable for everyone. We strive to offer a wide range of accommodations, from budget-friendly options to luxurious stays, ensuring that there's something for every traveler.</p>
       
       <h2 className="text-2xl font-bold mb-2">What Sets Us Apart</h2>
-      <p className="mb-4">At [Your Hotel Booking Website Name], we understand that planning a trip can be stressful. That's why we've designed our platform to be user-friendly, intuitive, and reliable. With a seamless booking process and access to thousands of hotels worldwide, we're here to simplify your travel experience.</p>
+      <p className="mb-4">At Preaceful Hotel, we understand that planning a trip can be stressful. That's why we've designed our platform to be user-friendly, intuitive, and reliable. With a seamless booking process and access to thousands of hotels worldwide, we're here to simplify your travel experience.</p>
       
       <h2 className="text-2xl font-bold mb-2">Our Team</h2>
-      <p className="mb-4">Behind [Your Hotel Booking Website Name] is a dedicated team of travel enthusiasts, developers, and customer support specialists. We're passionate about travel and are committed to helping you find the perfect accommodations for your next adventure. Meet our team:</p>
+      <p className="mb-4">Behind Preaceful Hotel is a dedicated team of travel enthusiasts, developers, and customer support specialists. We're passionate about travel and are committed to helping you find the perfect accommodations for your next adventure. Meet our team:</p>
       
       <ul className="list-disc pl-6 mb-4">
         <li>John Doe - CEO</li>

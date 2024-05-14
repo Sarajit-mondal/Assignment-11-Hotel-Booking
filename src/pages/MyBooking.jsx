@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { userContext } from '../providers/AuthProvider';
 import moment from 'moment';
@@ -27,6 +27,16 @@ const MyBooking = () => {
   const [totalReviews,setTotalReviews] = useState()
   const [idAllRoom,setIdAllRoom] = useState()
   const [bookingId,setBookingId] = useState()
+
+
+  // get oneRoom totalReviews
+  const getTotalRivews =()=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/allRoom/${idAllRoom}`)
+  .then(res => {
+    setTotalReviews(res.data.TotalReviews +1)
+  })
+  .catch(error =>console.log(error.code))
+  }
 
 // handle room update
 // handle room update
@@ -91,7 +101,7 @@ const cancelBooking = (id,checkIn) =>{
   const bookingStarDate = new Date(newDateFormat)
   const distanceDate = bookingStarDate - today;
   const oneDay = 1000 * 60 * 60 * 24;
-
+  console.log(bookingStarDate)
   const update ={
     "update" : 'available'
   }
@@ -162,6 +172,7 @@ const cancelBooking = (id,checkIn) =>{
   // handlepostRaing
   const handlePostRating = (e) =>{
    e.preventDefault()
+  
    const todayDate = moment(today).format('DD-MM-YYYY')
    const timeStamp = moment(today).unix();
   //  console.log(username,rating,todayDate,timeStamp, comment|| "This was awsome room")
@@ -169,14 +180,16 @@ const cancelBooking = (id,checkIn) =>{
 
    const newRating = {
    "username" : username,
-   "rating" : rating,
+   "rating" : rating, 
    "todayDate":todayDate,
-   "comment":comment|| "This was awsome room"
+   "timeStamp":timeStamp,
+   "comment":comment|| "This was awsome room.I love that room.if i come here again than i will book that room again"
    }
 
    const update ={
      "update" : totalReviews
    }
+   console.log(totalReviews)
   //  set the database
   axios.post(`${import.meta.env.VITE_API_URL}/rating`,newRating)
   .then(res => {
@@ -187,6 +200,7 @@ const cancelBooking = (id,checkIn) =>{
       text: "Review Post Successful",
       showConfirmButton: true,
       confirmButtonText: "Ok",
+      icon:"success"
     })
     .then(res => {
       if(res.isConfirmed){
@@ -241,7 +255,7 @@ const cancelBooking = (id,checkIn) =>{
                     <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalf />
             </div>
             <button onClick={()=> {
-              setTotalReviews(booking.TotalReviews +1)
+               getTotalRivews()
               setIdAllRoom(booking.allRoomId)
               document.getElementById("my_modal_4").showModal()}
               } className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
@@ -348,7 +362,7 @@ const cancelBooking = (id,checkIn) =>{
         {/* show modal update date */}
         <div>
       <dialog id="my_modal_5" className="modal">
-        <div className="modal-box w-11/12 md:w-1/4 max-w-xl bg-light">
+        <div className="modal-box w-11/12 md:w-1/4 max-w-xl bg-light flex items-center justify-center">
           {/* content  */}
           {/* content  */}
           {/* content  */}
