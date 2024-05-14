@@ -83,6 +83,7 @@ console.log(differenceInDays)
         text: "Booking Successful",
         showConfirmButton: true,
         confirmButtonText: "Ok",
+        icon:"success"
       })
       .then(res => {
         if(res.isConfirmed){

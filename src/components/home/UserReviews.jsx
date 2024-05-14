@@ -19,7 +19,7 @@ function UserReviews() {
   const [allReview,setAllReview] = useState()
 
 useEffect(()=>{
-  axios.get(`${import.meta.env.VITE_API_URL}/allReview`)
+  axios.get(`${import.meta.env.VITE_API_URL}/allReview/sort`)
   .then(res => {
     setAllReview(res.data)
   })

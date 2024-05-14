@@ -37,7 +37,7 @@ console.log(allRooms)
     }
   };
 
-  const handleReview = () => {
+  const handleReview = (id) => {
     if (!user) {
       Swal.fire({
         text: "Please SignUp or LogIn First",
@@ -59,7 +59,7 @@ console.log(allRooms)
         cancelButtonText: "No",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/viewDetails');
+          navigate(`/viewDetails/${id}`);
         }
       });
     }
@@ -122,7 +122,7 @@ console.log(allRooms)
                 </div>
                 <small className='text-skyBlue-400'>({room.TotalReviews} Verifled Reviews)</small>
                 <br />
-                <Link className="underline font-extrabold text-[#fc6f03]" onClick={handleReview}>Post Review</Link>
+                <Link className="underline font-extrabold text-[#fc6f03]" onClick={()=>handleReview(room._id)}>Post Review</Link>
               </div>
             </div>
           </div>

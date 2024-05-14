@@ -31,7 +31,7 @@ const MyBooking = () => {
 
   // get oneRoom totalReviews
   const getTotalRivews =()=>{
-    axios.get(`${import.meta.env.VITE_API_URL}/allRoom/${idAllRoom ||'663fbe83cbcb0286204e2ba7'}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/allRoom/${idAllRoom ||'6643b6069828c1377400ce94'}`)
   .then(res => {
     setTotalReviews(res.data.TotalReviews +1)
   })
