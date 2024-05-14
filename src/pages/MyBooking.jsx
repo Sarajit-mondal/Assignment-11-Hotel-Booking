@@ -7,6 +7,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
 import useBookingData from '../hooks/useBookingData';
 import Loading from '../components/loding/Loading';
+import axios from 'axios';
+import { update } from 'firebase/database';
+import { toast } from 'react-toastify';
 
 const MyBooking = () => {
   const {user} = useContext(userContext)
@@ -21,6 +24,8 @@ const MyBooking = () => {
   const [username, setUsername] = useState(user?.displayName || "userName");
   const [rating, setRating] = useState(1);
   const [comment, setComment] = useState('');
+  const [totalReviews,setTotalReviews] = useState()
+  const [idAllRoom,setIdAllRoom] = useState()
 
 // handle room book
 const handRoomBook =(e) =>{
@@ -71,8 +76,44 @@ const cancelBooking = () =>{
   // handlepostRaing
   const handlePostRating = (e) =>{
    e.preventDefault()
-   console.log(username,rating,comment || "This was awsome room")
+   const todayDate = moment(today).format('DD-MM-YYYY')
+   const timeStamp = moment(today).unix();
+  //  console.log(username,rating,todayDate,timeStamp, comment|| "This was awsome room")
+  
 
+   const newRating = {
+   "username" : username,
+   "rating" : rating,
+   "todayDate":todayDate,
+   "comment":comment|| "This was awsome room"
+   }
+
+   const update ={
+     "update" : totalReviews
+   }
+  //  set the database
+  axios.post(`${import.meta.env.VITE_API_URL}/rating`,newRating)
+  .then(res => {
+    axios.patch(`${import.meta.env.VITE_API_URL}/allRoomUpdateRewiew/${idAllRoom}`,update)
+     
+    // queryClient.invalidateQueries({queryKey:['allRoom']})
+    Swal.fire({
+      text: "Review Post Successful",
+      showConfirmButton: true,
+      confirmButtonText: "Ok",
+    })
+    .then(res => {
+      if(res.isConfirmed){
+       
+      }
+    })
+    
+  })
+  .catch(error => {
+    toast("some this is worng",error.code)
+  })
+
+  console.log(totalReviews)
    document.getElementById("my_modal_4").close()
   }
 
@@ -83,42 +124,49 @@ const cancelBooking = () =>{
      }
        <table className='w-full md:w-3/4 mx-auto'>
        <tbody className='space-y-5'>
-        <tr className='border-2 shadow-xl my-5'>
-        <td className='p-3'>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className=" rounded-xl size-20">
-                <img src="https://img.freepik.com/free-vector/hotel-double-room-cartoon-illustration_33099-2026.jpg?t=st=1715349398~exp=1715352998~hmac=9c99cbe733e6aca6e53dad4ab28eae23cfab28f853ff1d878206124940796b9a&w=996" alt="Avatar Tailwind CSS Component" />
+        {/* table row */}
+        {
+          bookingData && bookingData.map(booking => <tr key={booking._id} className='border-2 shadow-xl my-5'>
+          <td className='p-3'>
+            <div className="flex items-center gap-3">
+              <div className="avatar">
+                <div className=" rounded-xl size-20">
+                  <img src={booking.roomImage} alt="Avatar Tailwind CSS Component" />
+                </div>
+              </div>
+              <div>
+                <div className="font-bold text-lg">Room No :  <span className='text-skyBlue-500'>{booking.RoomNo}</span></div>
+                <div className="text-sm opacity-80">{booking.roomSize}</div>
               </div>
             </div>
-            <div>
-              <div className="font-bold text-lg">Room No : <span className='text-skyBlue-500'>56</span></div>
-              <div className="text-sm opacity-80">sque 500 ft</div>
+          </td>
+          <td className='font-bold '>
+          <p className='mb-3'>PaymentStatus <span className='text-skyBlue-400'>Paid</span></p>
+          <p>Total Cost $: <span className='text-skyBlue-400'>{booking.totalCost}</span></p>
+          </td>
+          <td>
+           <div className='flex gap-2 items-center mb-3'><span className='bg-skyBlue-500 block size-3 rounded-full'></span> <p>{booking.checkIn}</p></div>
+           <div className='flex gap-2 items-center'><span className='bg-red-500 block size-3 rounded-full'></span> <p>{booking.checkOut}</p></div>
+           
+          </td>
+          {/* ratting */}
+          <td> 
+          <div className="flex text-lg text-[#fc6f03] ">
+                    <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalf />
             </div>
-          </div>
-        </td>
-        <td className='font-bold '>
-        <p className='mb-3'>paymentStatus <span className='text-skyBlue-400'>Paid</span></p>
-        <p>Total Cost $: <span className='text-skyBlue-400'>567</span></p>
-        </td>
-        <td>
-         <div className='flex gap-2 items-center mb-3'><span className='bg-skyBlue-500 block size-3 rounded-full'></span> <p>12/05/2024</p></div>
-         <div className='flex gap-2 items-center'><span className='bg-red-500 block size-3 rounded-full'></span> <p>16/05/2024</p></div>
-         
-        </td>
-        {/* ratting */}
-        <td> 
-        <div className="flex text-lg text-[#fc6f03] ">
-                  <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalf />
-          </div>
-          <button onClick={()=> document.getElementById("my_modal_4").showModal()} className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
-        </td>
-        <th>
-        <button onClick={()=> document.getElementById("my_modal_5").showModal()} className="btn bg-skyBlue-500 btn-sm">Update</button>
-        <br />
-        <button onClick={cancelBooking} className="btn mt-2 btn-error btn-sm">Cancel</button>
-        </th>
-      </tr>
+            <button onClick={()=> {
+              setTotalReviews(booking.TotalReviews +1)
+              setIdAllRoom(booking.allRoomId)
+              document.getElementById("my_modal_4").showModal()}
+              } className=" text-orange-600 font-extrabold mt-3  underline">Post Review</button>
+          </td>
+          <th>
+          <button onClick={()=> document.getElementById("my_modal_5").showModal()} className="btn bg-skyBlue-500 btn-sm">Update</button>
+          <br />
+          <button onClick={cancelBooking} className="btn mt-2 btn-error btn-sm">Cancel</button>
+          </th>
+        </tr>)
+        }
         </tbody>
        </table>
 
@@ -168,6 +216,17 @@ const cancelBooking = () =>{
           ></textarea>
         </div>
 
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700">Timestamp</label>
+          <input
+            type="text"
+            id="username"
+            className="mt-1 p-2 border bg-transparent border-skyBlue-400 rounded-md w-full"
+            value={moment(today).format('DD-MM-YYYY')}
+         
+          />
+        </div>
+
           </form>
 
           <div className="modal-action">
@@ -175,7 +234,7 @@ const cancelBooking = () =>{
               
               {/* Close button */}
               <button
-                className="btn mr-5 bg-red-400"
+                className="btn mr-5 text-white bg-red-400"
                 onClick={(e) => {
                  e.preventDefault()
                   document.getElementById("my_modal_4").close()}
@@ -183,7 +242,7 @@ const cancelBooking = () =>{
                 Close
               </button>
               {/* Confirm button */}
-              <button onClick={handlePostRating} className="btn bg-skyBlue-400">
+              <button onClick={handlePostRating} className="btn  text-white bg-skyBlue-400">
                 Confirm
               </button>
             </form>

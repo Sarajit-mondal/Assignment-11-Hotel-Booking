@@ -44,6 +44,7 @@ function ViewDetails() {
   const handleConfirm =(e)=>{
     e.preventDefault()
 
+    const checkIn = moment(checkInDate).format('DD-MM-YYYY')
     const checkOut = moment(checkOutDate).format('DD-MM-YYYY')
     
 //     // calculation starday and endDay gap
@@ -64,9 +65,10 @@ console.log(differenceInDays)
     const booking = {
       "RoomNo": Math.ceil(Math.random() * 50 +1),
       "allRoomId" : room._id,
+      "TotalReviews":room.TotalReviews,
       "roomImage": room.RoomImages,
       "roomSize": room.RoomSize,
-      "checkIn":checkInDate,
+      "checkIn":checkIn,
       "checkOut": checkOut,
       "totalCost" : differenceInDays * room.
       PricePerNight,
@@ -75,7 +77,7 @@ console.log(differenceInDays)
     axios.post(`${import.meta.env.VITE_API_URL}/bookingRoom`,booking)
     .then(res => {
       axios.patch(`${import.meta.env.VITE_API_URL}/allRoomUpdate/${room._id}`,{update:"unavailable"})
-
+       
       // queryClient.invalidateQueries({queryKey:['allRoom']})
       Swal.fire({
         text: "Booking Successful",
