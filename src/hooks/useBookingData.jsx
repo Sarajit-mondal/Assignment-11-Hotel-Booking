@@ -4,9 +4,10 @@ import React, { useContext } from 'react'
 import { userContext } from '../providers/AuthProvider'
 
 function useBookingData() {
-  const {user} =useContext(userContext)
+  const {user} =useContext(userContext) 
+       
     const getData = async() =>{                     
-       const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/allBooking/${user.email}`)
+       const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/allBooking/${user.email}`,{ withCredentials:true})
         return data
        }
         const query = useQuery({ queryKey: ['allBooking'], queryFn: getData })
