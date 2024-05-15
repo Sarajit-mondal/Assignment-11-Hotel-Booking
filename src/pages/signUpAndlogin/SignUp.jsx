@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 import { useContext } from "react";
 import { userContext } from '../../providers/AuthProvider';
+import { Helmet } from 'react-helmet';
 
 
 function SignUp() {
@@ -90,6 +91,9 @@ function SignUp() {
 
   return (
     <div className="lg:m-20 mt-10">
+       <Helmet>
+    <title>Sign Up</title>
+   </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-2 justify-between w-full text-center items-center border-2 border-sky-100  mx-auto rounded-2xl  shadow-xl overflow-hidden">
         <div className=" bg-skyBlue-400 h-full flex flex-col space-y-5 items-center justify-center p-10 text-white text-light">
           <h2 className="text-3xl text-grayLight font-extrabold"> Welcome Back!

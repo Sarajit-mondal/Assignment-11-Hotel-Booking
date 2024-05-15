@@ -7,6 +7,7 @@ import useRoomsData from '../hooks/useRoomsData';
 import Loading from '../components/loding/Loading';
 import axios from 'axios';
 import { SlEarphones } from 'react-icons/sl';
+import { Helmet } from 'react-helmet';
 
 function Rooms() {
   const { user } = useContext(userContext);
@@ -68,6 +69,9 @@ console.log(allRooms)
 
   return (
     <div className="relative border-2 border-sky-400 p-5 my-5 rounded-xl min-h-screen">
+       <Helmet>
+    <title>Rooms</title>
+   </Helmet>
       {isLoading && <Loading />}
       <h2 className="text-4xl font-bold text-sky-400 mb-4 text-center">
         Our All Rooms

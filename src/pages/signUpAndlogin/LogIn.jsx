@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { useContext } from "react";
 import { userContext } from "../../providers/AuthProvider";
+import { Helmet } from "react-helmet";
 
 export default function LogIn() {
   const [showPassword, setShowPassword] = useState(false)
@@ -87,6 +88,9 @@ export default function LogIn() {
 
   return (
     <div className="lg:m-20 mt-10">
+       <Helmet>
+    <title>Log In</title>
+   </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-2 justify-between w-full text-center items-center border-2 border-sky-100  mx-auto rounded-2xl  shadow-xl overflow-hidden">
         <div className=" bg-skyBlue-400 h-full flex flex-col space-y-5 items-center justify-center p-10  text-light">
           <h2 className="text-3xl text-grayLight font-extrabold">

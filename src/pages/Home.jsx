@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet"
 import Banner from "../components/home/Banner"
 import FeaturedRooms from "../components/home/FeaturedRooms"
 import MyMap from "../components/home/MyMap"
@@ -8,6 +9,10 @@ import UserReviews from "../components/home/UserReviews"
 
 function Home() {
   return (
+   <>
+   <Helmet>
+    <title>Home Page</title>
+   </Helmet>
     <div className="space-y-16">
       <Banner></Banner>
       <MyMap></MyMap>
@@ -15,6 +20,7 @@ function Home() {
       <FeaturedRooms></FeaturedRooms>
       <UserReviews></UserReviews>
     </div>
+    </>
   )
 }
 

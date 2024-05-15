@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const ContactUs = () => {
   const handleAbout = (e) =>{
@@ -6,6 +7,9 @@ const ContactUs = () => {
   }
   return (
     <div className="container md:w-3/5 mx-auto py-8">
+       <Helmet>
+    <title>Contact Us</title>
+   </Helmet>
       <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
       
       {/* Contact Form */}

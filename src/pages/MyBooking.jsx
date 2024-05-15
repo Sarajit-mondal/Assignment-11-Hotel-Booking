@@ -10,6 +10,7 @@ import Loading from '../components/loding/Loading';
 import axios from 'axios';
 import { update } from 'firebase/database';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const MyBooking = () => {
   const {user} = useContext(userContext)
@@ -220,6 +221,9 @@ const cancelBooking = (id,checkIn) =>{
 
   return (
    <div className='relative' >
+     <Helmet>
+    <title>MyBooking</title>
+   </Helmet>
      {
       isLoading && <Loading></Loading>
      }

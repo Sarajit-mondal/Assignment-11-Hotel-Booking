@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom"
 import Navbar from "../home/navbar/Navbar"
+import { Helmet } from "react-helmet"
 
 
 function ErrorPage() {
   return (
     <div>
+       <Helmet>
+    <title>Error Page</title>
+   </Helmet>
    <Navbar></Navbar>
     <div className="relative mt-10">
       <img src="https://i.postimg.cc/kM1k7stj/242457-P3-N4-GP-961.jpg" alt="" className="w-2/4  h-[400px] rounded-2xl mx-auto"/>

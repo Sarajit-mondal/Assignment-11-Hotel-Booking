@@ -1,8 +1,12 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const AboutUs = () => {
   return (
     <div className="mx-auto max-w-2xl p-8">
+       <Helmet>
+    <title>About Us</title>
+   </Helmet>
       <h1 className="text-3xl font-bold mb-4">About Us</h1>
       <p className="mb-4">Welcome to Preaceful Hotel! We're dedicated to providing you with the best hotel booking experience possible.</p>
       

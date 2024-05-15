@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 function Banner() {
   return (
-    <div className="text-center">
+    <div className="text-center z-0">
     <Swiper
       navigation={true}
       freeMode={true}
@@ -25,7 +25,7 @@ function Banner() {
       spaceBetween={30}
       className="mySwiper"
     >
-     <SwiperSlide>
+     <SwiperSlide className="z-0">
      <div className=" h-[70vh] bg-cover bg-center" 
     style={{
         backgroundImage: 'linear-gradient(to right, #0ea5e933, #54545433),url(https://i.postimg.cc/D0HfySBZ/swimming-pool-beach-luxury-hotel-type-entertainment-complex-amara-dolce-vita-luxury-hotel-resort-tek.jpg)'

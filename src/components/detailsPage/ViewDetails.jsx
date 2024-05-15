@@ -10,6 +10,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { update } from 'firebase/database';
 import { useQueryClient } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet';
 
 
 function ViewDetails() {
@@ -120,6 +121,9 @@ console.log(differenceInDays)
   console.log(room)
   return (
     <div className="max-w-5xl mx-auto px-4 py-5 min-h-screen ">
+       <Helmet>
+    <title>Room Details</title>
+   </Helmet>
     <div className="grid grid-cols-1 md:h-[500px] md:mt-10  md:grid-cols-2 gap-8 border-2 border-sky-400 ">
       <div className="p-1">
         <img src={room.RoomImages} className="w-full md:h-full" />
