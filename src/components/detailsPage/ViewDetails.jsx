@@ -24,8 +24,8 @@ function ViewDetails() {
     const [checkOutDate, setCheckOutDate] = useState(null);
     const navigator = useNavigate()
 
-    console.log(new Date(checkInDate))
-    console.log(typeof checkOutDate)
+    // console.log(new Date(checkInDate))
+    // console.log(typeof checkOutDate)
   //handle room book 
   //handle room book 
   const handRoomBook = (e) =>{
@@ -64,6 +64,7 @@ const differenceInDays = Math.round(differenceInMs / millisecondsInOneDay);
 console.log(differenceInDays)
 
     const booking = {
+      "userEmail" : user.email,
       "RoomNo": Math.ceil(Math.random() * 50 +1),
       "allRoomId" : room._id,
       "TotalReviews":room.TotalReviews,

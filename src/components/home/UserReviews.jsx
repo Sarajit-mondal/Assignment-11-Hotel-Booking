@@ -25,7 +25,7 @@ useEffect(()=>{
   })
 
 },[])
-console.log(allReview)
+// console.log(allReview)
   const isSmallDevice = window.innerWidth < 700
   return (
     <div className="flex justify-between gap-16">

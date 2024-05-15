@@ -5,11 +5,11 @@ import Footer from "../components/home/navbar/Footer"
 
 function MainLayout() {
   return (
-    <div className="font-roboto">
+    <div className="font-roboto h-screen flex flex-col justify-between">
         <header>
           <Navbar></Navbar>
         </header>
-        <main>
+        <main className="h">
             <Outlet></Outlet>
         </main>
         <footer>
