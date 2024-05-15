@@ -154,36 +154,40 @@ function DropdownMenu() {
                       {/* mapping  */}
                       {/* mapping  */}
                      {
-                        displayedRooms.map(room => <tr className="hover:bg-sky-200 ease-linear duration-300">
-                        <td>
-                          <div className="avatar">
-                            <div className="size-20">
-                              <img
-                                src={room.RoomImages}
-                                className="h-16 w-20 rounded-xl"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="hidden md:flex mt-7">{room._id.slice(-8)}</td>
-
-                        <td>$ {room.PricePerNight}</td>
-                        <td>
-                          {room?.SpecialOffers[0]} <br />
-                          {room?.SpecialOffers[1]} <br />
-                          {room?.ExtraOffer} <br />
-                        </td>
-                        <td className={`hidden text-bold md:block ${room.Availability === "unavailable" ? 'text-red-500' :'text-skyBlue-500'} `}>
-                          {room.Availability}
-                        </td>
-                        <td>
-                          <Link to={`/viewDetails/${room._id}`}>
-                            <button className="btn bg-sky-400 text-white btn-sm">
-                              Book Now
-                            </button>
-                          </Link>
-                        </td>
-                      </tr>)
+                      displayedRooms &&  displayedRooms.map((room,inx) => {
+                            if(inx <= 20 ){
+                              return  <tr className="hover:bg-sky-200 ease-linear duration-300">
+                              <td>
+                                <div className="avatar">
+                                  <div className="size-20">
+                                    <img
+                                      src={room.RoomImages}
+                                      className="h-16 w-20 rounded-xl"
+                                    />
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="hidden md:flex mt-7">{room._id.slice(-8)}</td>
+      
+                              <td>$ {room.PricePerNight}</td>
+                              <td>
+                                {room?.SpecialOffers[0]} <br />
+                                {room?.SpecialOffers[1]} <br />
+                                {room?.ExtraOffer} <br />
+                              </td>
+                              <td className={`hidden text-bold md:block ${room.Availability === "unavailable" ? 'text-red-500' :'text-skyBlue-500'} `}>
+                                {room.Availability}
+                              </td>
+                              <td>
+                                <Link to={`/viewDetails/${room._id}`}>
+                                  <button className="btn bg-sky-400 text-white btn-sm">
+                                    Book Now
+                                  </button>
+                                </Link>
+                              </td>
+                            </tr>
+                            }
+                      })
                      }
                     </tbody>
                   </table>
