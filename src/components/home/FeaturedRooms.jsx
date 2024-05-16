@@ -3,8 +3,9 @@ import useRoomsData from "../../hooks/useRoomsData";
 
 function FeaturedRooms() {
   const {data : allRoom = [],isloading} = useRoomsData()
+  
   return (
-    <div className=" border-2 border-sky-400 p-5 my-5 rounded-xl">
+    <div data-aos="fade-left" className=" border-2 border-sky-400 p-5 my-5 rounded-xl">
       <h2 className="text-4xl font-bold text-sky-400 mb-10 text-center">
         Our Featured Rooms
       </h2>

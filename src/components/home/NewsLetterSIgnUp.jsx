@@ -16,7 +16,7 @@ const NewsLetterSIgnUp = () => {
   };
 
   return (
-   <div>
+   <div data-aos="fade-right">
       <h2 className="text-2xl font-bold text-sky-400 mb-10 text-center">
       Subscribe Our NewsLetter
       </h2>

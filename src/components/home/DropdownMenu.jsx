@@ -32,8 +32,8 @@ function DropdownMenu() {
 
   }
   return (
-    <div>
-      <div className="navbar bg-sky-100 p-5 rounded-full">
+    <div >
+      <div data-aos="fade-right" className="navbar bg-sky-100 p-5 rounded-full">
         <div className="flex-1 gap-5 ">
           <a className="btn btn-ghost text-xl font-bold hidden md:block">
             All Offer Room

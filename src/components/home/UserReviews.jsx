@@ -28,7 +28,7 @@ useEffect(()=>{
 // console.log(allReview)
   const isSmallDevice = window.innerWidth < 700
   return (
-    <div className="flex justify-between gap-16">
+    <div data-aos="fade-right" className="flex justify-between gap-16">
       {/* left side  */}
       <div className="space-y-5 min-w-48">
         <h2 className="text-3xl font-bold">User Reviews</h2>
@@ -60,7 +60,7 @@ useEffect(()=>{
         {/* slider  */}
         {
         allReview && allReview.map(review =>  <SwiperSlide key={review._id}>
-          <div className='flex flex-col  justify-between border-2 border-skyBlue-300 h-full p-4'>
+          <div className='flex flex-col cursor-pointer justify-between border-2 border-skyBlue-300 h-full p-4'>
           <div className=''>
            <div className="flex text-xl ">
           {

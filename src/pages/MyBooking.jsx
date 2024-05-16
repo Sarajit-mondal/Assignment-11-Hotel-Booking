@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet';
 const MyBooking = () => {
   const {user} = useContext(userContext)
   const {data : bookingData =[],isLoading,refetch} = useBookingData()
-  console.log(bookingData )
+  
   // date picker
   const today = new Date();
   const tomorrow = moment().add(1,'day').format('DD-MM-YYYY');
