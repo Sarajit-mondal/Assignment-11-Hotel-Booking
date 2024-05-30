@@ -15,6 +15,32 @@ import axios from 'axios';
 
 export default function BestMoment() {
 const [allMoment,setAllMoment] = useState([])
+const [imagePreview,setImagePreview] = useState()
+const [image,setImage] = useState()
+
+
+const handleImage = (image) =>{
+  setImage(image)
+  setImagePreview(URL.createObjectURL(image))
+}
+
+// imageUpload
+const imageUpload = async() =>{
+ try {
+  if(image){
+    const formData = new FormData();
+    formData.append('image',image)
+
+   const {data} =await axios.post(`https://api.imgbb.com/1/upload/key=${import.meta.env.VITE_IMAGEBB_API_KEY}`,
+   formData
+   )
+   console.log(data)
+
+  }
+ } catch (error) {
+  console.log(error)
+ }
+}
 
 
 useEffect(()=>{
@@ -30,7 +56,16 @@ axios.get(`${import.meta.env.VITE_API_URL}/bestMoment/sort`)
   return (
     <div data-aos="fade-right" className='mb-20'>
       <h2 className='text-4xl font-bold my-10'>Share your Best Moment</h2>
-      <Swiper
+      <div className='flex flex-col md:flex-row'>
+        {/* image upload */}
+        <div className=' w-60'>
+           <form action="">
+           <input type="file" name="file" id="" onChange={(e)=>handleImage(e.target.files[0])}/>
+           <button type="button" value="Upload" className='border-2 rounded-xl my-2 px-2 ' onClick={imageUpload}>Upload</button>
+           </form>
+           <img src={imagePreview} alt="" className='w-full max-h-40  my-5' />
+        </div>
+        <Swiper
         effect={'coverflow'}
         slidesPerView ={4}
         grabCursor={true}
@@ -54,6 +89,8 @@ axios.get(`${import.meta.env.VITE_API_URL}/bestMoment/sort`)
        }
        
       </Swiper>
+      </div>
+  
     </div>
   );
 }
