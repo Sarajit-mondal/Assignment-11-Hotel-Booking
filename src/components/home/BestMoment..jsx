@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
+import moment from 'moment';
 
 
 // import required modules
@@ -35,12 +36,24 @@ const imageUpload = async() =>{
    formData
    )
    console.log(data.data.display_url)
+   const momentImage = data.data.display_url
+
+   //set database 
+  
+   const momentData = {
+      date : moment().format('YYYY-MM-DD'),
+      image : momentImage,
+      timeStamp : Date.now()
+   }
+   await axios.post(`${import.meta.env.VITE_API_URL}/bestMoment`,momentData)
 
   }
  } catch (error) {
   console.log(error)
  }
 }
+
+console.log(allMoment)
 
 
 useEffect(()=>{
