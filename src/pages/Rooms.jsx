@@ -3,35 +3,46 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { userContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
-import useRoomsData from '../hooks/useRoomsData';
 import Loading from '../components/loding/Loading';
 import axios from 'axios';
-import { SlEarphones } from 'react-icons/sl';
 import { Helmet } from 'react-helmet';
 
 function Rooms() {
   const { user } = useContext(userContext);
   const navigate = useNavigate();
-
-  const { data: allRooms, isLoading, isError, error } = useRoomsData();
   const [selectedRange, setSelectedRange] = useState('');
   const [displayedRooms, setDisplayedRooms] = useState([]);
-console.log(allRooms)
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch all rooms data on component mount
   useEffect(() => {
-    setDisplayedRooms(allRooms);
-  }, [allRooms]);
+    const fetchAllRooms = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/allRoom/sort?rangeOne=${1}&rangeTwo=${10000}`);
+        setDisplayedRooms(response.data); // Display all rooms initially
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      } finally {
+        setIsLoading(false); // Hide loading indicator
+      }
+    };
+    fetchAllRooms();
+  }, []);
 
   const handleRangeChange = (event) => {
     const range = event.target.value;
     setSelectedRange(range);
 
     if (range === '') {
-      setDisplayedRooms(allRooms); // Show all rooms if range is empty
+      // Fetch all rooms if no range is selected
+      axios.get(`${import.meta.env.VITE_API_URL}/allRoom/sort?rangeOne=${1}&rangeTwo=${10000}`)
+        .then(res => setDisplayedRooms(res.data))
+        .catch(error => console.error("Error fetching all rooms:", error));
     } else {
-      const rangeArray = range.split("-");
-      const rangeOne = rangeArray[0];
-      const rangeTwo = rangeArray[1];
+      // Parse the selected range
+      const [rangeOne, rangeTwo] = range.split("-").map(Number);
 
+      // Fetch filtered rooms based on the price range
       axios.get(`${import.meta.env.VITE_API_URL}/allRoom/sort?rangeOne=${rangeOne}&rangeTwo=${rangeTwo}`)
         .then(res => setDisplayedRooms(res.data))
         .catch(error => console.error("Error fetching filtered rooms:", error));
@@ -66,12 +77,11 @@ console.log(allRooms)
     }
   };
 
-
   return (
     <div className="relative border-2 border-sky-400 p-5 my-5 rounded-xl min-h-screen">
-       <Helmet>
-    <title>Rooms</title>
-   </Helmet>
+      <Helmet>
+        <title>Rooms</title>
+      </Helmet>
       {isLoading && <Loading />}
       <h2 className="text-4xl font-bold text-sky-400 mb-4 text-center">
         Our All Rooms
@@ -109,31 +119,28 @@ console.log(allRooms)
               </figure>
               <Link to={`/viewDetails/${room._id}`} className="absolute top-2/4 left-2/4 rounded-xl -translate-x-2/4 -translate-y-2/4 w-full h-full bg-[#87CEEB33] flex justify-center items-center [&>*]:hover:block hover:bg-[#87CEEB80] ease-linear duration-300">
                 <button className="btn hidden border-sky-500 border-2 bg-transparent hover:bg-sky-300 font-bold text-white text-lg ">
-                 See Details
+                  See Details
                 </button>
-              
-
               </Link>
               <small className='flex justify-center p-1'>Per Night : $ {room.PricePerNight}</small>
             </div>
             <div className="px-5 pt-3 pb-5">
               <div className="min-w-48">
-               
                 <h2 className="text-2xl text-skyBlue-400 font-bold">Total Review : {room.TotalReviews} </h2>
                 <span className="flex items-end"><h3 className="text-[#fc6f03] text-2xl font-bold">{room.AverageRating}</h3> <p className='text-skyBlue-400'>out of 5 Stars</p></span>
                 <div className="flex text-lg text-[#fc6f03] ">
                   <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalf />
                 </div>
-                <small className='text-skyBlue-400'>({room.TotalReviews} Verifled Reviews)</small>
+                <small className='text-skyBlue-400'>({room.TotalReviews} Verified Reviews)</small>
                 <br />
-                <Link className="underline font-extrabold text-[#fc6f03]" onClick={()=>handleReview(room._id)}>Post Review</Link>
+                <Link className="underline font-extrabold text-[#fc6f03]" onClick={() => handleReview(room._id)}>Post Review</Link>
               </div>
             </div>
           </div>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default Rooms;
